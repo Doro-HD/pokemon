@@ -20,6 +20,10 @@ namespace Pokemon.Combat {
 			this.damageValue += modifier;
 		}
 
+		public Type GetType() {
+			return this.type;
+		}
+
 		public int GetDamageValue() {
 			return this.damageValue;
 		}

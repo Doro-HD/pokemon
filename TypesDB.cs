@@ -19,7 +19,7 @@ namespace Pokemon {
 
 				var defenderIndex = defenderColumns.IndexOf(defender.ToString());
 
-				int attackerIndex;
+				int? attackerIndex = null;
 				var attackIterator = attackerRows.GetEnumerator();
 				var i = 0;
 				var searchingForAttackIndex = true;
@@ -32,6 +32,12 @@ namespace Pokemon {
 						i++;
 					}
 				}
+
+				if (attackerIndex.HasValue()) {
+					var typeComparator = attackerRows[attackerIndex][defenderIndex];
+					Console.WriteLine(typeComparator);
+				}
+
 			}
 
 			public static void Load() {

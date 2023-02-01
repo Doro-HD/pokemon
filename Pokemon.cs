@@ -44,6 +44,7 @@ namespace Pokemon {
 		}
 
 		public bool RecieveDamage(Combat.Damage damage) {
+			Combat.TypeComparator.CompareTypes(damage.GetType(), this.type);
 			switch (damage.GetDamageStat()) {
 				case Combat.DamageStat.NORMAL:
 					damage.ModifyDamage(-this.defence);
