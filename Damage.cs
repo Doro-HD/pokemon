@@ -1,35 +1,59 @@
-namespace Pokemon.Combat {
-	public enum DamageStat {
+namespace Pokemon.Combat 
+{
+	public enum DamageStat 
+	{
 		NORMAL,
 		SPECIAL
 	}
 
-	public class Damage {
+	public struct Damage 
+	{
 		
-		private Type type;
+		public Type Type
+		{get;}
 		private int damageValue;
-		private DamageStat damageStat;
+		public int DamageValue
+		{
+			get => damageValue;
+			set
+			{
+				if (value < 0)
+				{
+					damageValue = 0;
+				}
+				else
+				{
+					damageValue = value;
+				}
+			}
+		}
+		public DamageStat DamageStat
+		{get;}
+		public int ChanceToHit;
 
-		public Damage(Type type, int damageValue, DamageStat damageStat) {
-			this.type = type;
+		public Damage(Type type, int damageValue, DamageStat damageStat, int chanceToHit) {
+			this.Type = type;
 			this.damageValue = damageValue;
-			this.damageStat = damageStat;
+			this.DamageStat = damageStat;
+			
+			this.ChanceToHit = chanceToHit;
 		}
 
-		public void ModifyDamage(int modifier) {
-			this.damageValue += modifier;
-		}
+		public bool CalculateHit(Pokemon attacker)
+		{
+			var random = new Random();
+			var hitRoll = random.Next(0, 101);
 
-		public Type GetType() {
-			return this.type;
-		}
+			if (hitRoll < attacker.Accuracy)
+			{
+				hitRoll = attacker.Accuracy - hitRoll;
+			}
+			else
+			{
+				hitRoll = hitRoll - attacker.Accuracy;
+			}
 
-		public int GetDamageValue() {
-			return this.damageValue;
-		}
-
-		public DamageStat GetDamageStat() {
-			return this.damageStat;
+			return hitRoll <= this.ChanceToHit;
 		}
 	}
 }
